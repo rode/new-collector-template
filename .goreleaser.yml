@@ -1,4 +1,4 @@
-project_name: rode-collector-build
+project_name: rode-new-collector-template
 before:
   hooks:
     - go mod download

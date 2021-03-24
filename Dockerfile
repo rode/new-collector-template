@@ -20,12 +20,12 @@ COPY server server
 COPY proto proto
 
 # Build
-RUN --mount=type=cache,target=/root/.cache/go-build CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o collector-build
+RUN --mount=type=cache,target=/root/.cache/go-build CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o collector
 
 # Refer to https://github.com/GoogleContainerTools/distroless for more details
 FROM gcr.io/distroless/static:nonroot as runner
 WORKDIR /
-COPY --from=builder /workspace/collector-build .
+COPY --from=builder /workspace/collector .
 USER nonroot:nonroot
 
-ENTRYPOINT ["./collector-build"]
+ENTRYPOINT ["./collector"]

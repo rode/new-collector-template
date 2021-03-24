@@ -30,7 +30,7 @@ func NewNewCollectorTemplateClient(cc grpc.ClientConnInterface) NewCollectorTemp
 
 func (c *newCollectorTemplateClient) CreateEventOccurrence(ctx context.Context, in *CreateEventOccurrenceRequest, opts ...grpc.CallOption) (*CreateEventOccurrenceResponse, error) {
 	out := new(CreateEventOccurrenceResponse)
-	err := c.cc.Invoke(ctx, "/build_collector.v1alpha1.NewCollectorTemplate/CreateEventOccurrence", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/new_collector_template.v1alpha1.NewCollectorTemplate/CreateEventOccurrence", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +73,7 @@ func _NewCollectorTemplate_CreateEventOccurrence_Handler(srv interface{}, ctx co
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/build_collector.v1alpha1.NewCollectorTemplate/CreateEventOccurrence",
+		FullMethod: "/new_collector_template.v1alpha1.NewCollectorTemplate/CreateEventOccurrence",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(NewCollectorTemplateServer).CreateEventOccurrence(ctx, req.(*CreateEventOccurrenceRequest))
@@ -82,7 +82,7 @@ func _NewCollectorTemplate_CreateEventOccurrence_Handler(srv interface{}, ctx co
 }
 
 var _NewCollectorTemplate_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "build_collector.v1alpha1.NewCollectorTemplate",
+	ServiceName: "new_collector_template.v1alpha1.NewCollectorTemplate",
 	HandlerType: (*NewCollectorTemplateServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

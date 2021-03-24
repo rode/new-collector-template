@@ -24,7 +24,7 @@ import (
 var _ = Describe("Config", func() {
 	Describe("Build", func() {
 		DescribeTable("invalid configuration", func(flags []string) {
-			c, err := Build("collector-build", flags)
+			c, err := Build("collector", flags)
 
 			Expect(err).To(HaveOccurred())
 			Expect(c).To(BeNil())
@@ -35,7 +35,7 @@ var _ = Describe("Config", func() {
 		)
 
 		DescribeTable("successful configuration", func(flags []string, expected interface{}) {
-			c, err := Build("collector-build", flags)
+			c, err := Build("collector", flags)
 
 			Expect(err).To(BeNil())
 			Expect(c).To(Equal(expected))

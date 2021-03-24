@@ -14,7 +14,7 @@
 
 syntax = "proto3";
 
-package build_collector.v1alpha1;
+package new_collector_template.v1alpha1;
 
 option go_package = "github.com/rode/new-collector-template/proto/v1alpha1";
 
