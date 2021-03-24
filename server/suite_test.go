@@ -12,27 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-syntax = "proto3";
+package server
 
-package build_collector.v1alpha1;
+import (
+	"testing"
 
-option go_package = "github.com/rode/new-collector-template/proto/v1alpha1";
+	"github.com/brianvoe/gofakeit/v6"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
+	"go.uber.org/zap"
+)
 
-import "google/api/annotations.proto";
+var logger = zap.NewNop()
+var fake = gofakeit.New(0)
 
-service NewCollectorTemplate {
-  rpc CreateEventOccurrence(CreateEventOccurrenceRequest) returns (CreateEventOccurrenceResponse) {
-    option (google.api.http) = {
-      post: "/v1alpha1/events"
-      body: "*"
-    };
-  }
-}
-
-message CreateEventOccurrenceRequest {
-  string name = 1;
-}
-
-message CreateEventOccurrenceResponse {
-  string id = 2;
+func TestServer(t *testing.T) {
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "Server Suite")
 }

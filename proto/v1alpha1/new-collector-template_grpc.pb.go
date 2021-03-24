@@ -17,7 +17,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NewCollectorTemplateClient interface {
-	Hello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error)
+	CreateEventOccurrence(ctx context.Context, in *CreateEventOccurrenceRequest, opts ...grpc.CallOption) (*CreateEventOccurrenceResponse, error)
 }
 
 type newCollectorTemplateClient struct {
@@ -28,9 +28,9 @@ func NewNewCollectorTemplateClient(cc grpc.ClientConnInterface) NewCollectorTemp
 	return &newCollectorTemplateClient{cc}
 }
 
-func (c *newCollectorTemplateClient) Hello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error) {
-	out := new(HelloResponse)
-	err := c.cc.Invoke(ctx, "/build_collector.v1alpha1.NewCollectorTemplate/Hello", in, out, opts...)
+func (c *newCollectorTemplateClient) CreateEventOccurrence(ctx context.Context, in *CreateEventOccurrenceRequest, opts ...grpc.CallOption) (*CreateEventOccurrenceResponse, error) {
+	out := new(CreateEventOccurrenceResponse)
+	err := c.cc.Invoke(ctx, "/build_collector.v1alpha1.NewCollectorTemplate/CreateEventOccurrence", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -41,15 +41,15 @@ func (c *newCollectorTemplateClient) Hello(ctx context.Context, in *HelloRequest
 // All implementations should embed UnimplementedNewCollectorTemplateServer
 // for forward compatibility
 type NewCollectorTemplateServer interface {
-	Hello(context.Context, *HelloRequest) (*HelloResponse, error)
+	CreateEventOccurrence(context.Context, *CreateEventOccurrenceRequest) (*CreateEventOccurrenceResponse, error)
 }
 
 // UnimplementedNewCollectorTemplateServer should be embedded to have forward compatible implementations.
 type UnimplementedNewCollectorTemplateServer struct {
 }
 
-func (UnimplementedNewCollectorTemplateServer) Hello(context.Context, *HelloRequest) (*HelloResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Hello not implemented")
+func (UnimplementedNewCollectorTemplateServer) CreateEventOccurrence(context.Context, *CreateEventOccurrenceRequest) (*CreateEventOccurrenceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateEventOccurrence not implemented")
 }
 
 // UnsafeNewCollectorTemplateServer may be embedded to opt out of forward compatibility for this service.
@@ -63,20 +63,20 @@ func RegisterNewCollectorTemplateServer(s grpc.ServiceRegistrar, srv NewCollecto
 	s.RegisterService(&_NewCollectorTemplate_serviceDesc, srv)
 }
 
-func _NewCollectorTemplate_Hello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HelloRequest)
+func _NewCollectorTemplate_CreateEventOccurrence_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateEventOccurrenceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(NewCollectorTemplateServer).Hello(ctx, in)
+		return srv.(NewCollectorTemplateServer).CreateEventOccurrence(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/build_collector.v1alpha1.NewCollectorTemplate/Hello",
+		FullMethod: "/build_collector.v1alpha1.NewCollectorTemplate/CreateEventOccurrence",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NewCollectorTemplateServer).Hello(ctx, req.(*HelloRequest))
+		return srv.(NewCollectorTemplateServer).CreateEventOccurrence(ctx, req.(*CreateEventOccurrenceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -86,8 +86,8 @@ var _NewCollectorTemplate_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*NewCollectorTemplateServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Hello",
-			Handler:    _NewCollectorTemplate_Hello_Handler,
+			MethodName: "CreateEventOccurrence",
+			Handler:    _NewCollectorTemplate_CreateEventOccurrence_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

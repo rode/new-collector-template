@@ -3,6 +3,8 @@ module github.com/rode/new-collector-template
 go 1.15
 
 require (
+	github.com/brianvoe/gofakeit/v6 v6.0.0
+	github.com/golang/mock v1.4.4
 	github.com/golang/protobuf v1.5.1
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.3.0
 	github.com/onsi/ginkgo v1.15.2
