@@ -1,4 +1,4 @@
-.PHONY: test fmtcheck vet fmt license coverage mocks run
+.PHONY: test fmtcheck vet fmt license coverage mocks run generate
 MAKEFLAGS += --silent
 GOFMT_FILES?=$$(find . -name '*.go' | grep -v proto)
 LICENSE_FILES=$$(find -E . -regex '.*\.(go|proto)')
