@@ -34,6 +34,7 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/reflection"
 
 	"github.com/rode/new-collector-template/config"
@@ -83,6 +84,9 @@ func main() {
 	collectorServer := server.NewNewCollectorTemplateServer(logger, rodeClient)
 	v1alpha1.RegisterNewCollectorTemplateServer(grpcServer, collectorServer)
 
+	healthzServer := server.NewHealthzServer(logger.Named("healthz"))
+	grpc_health_v1.RegisterHealthServer(grpcServer, healthzServer)
+
 	go func() {
 		if err := grpcServer.Serve(lis); err != nil {
 			logger.Fatal("failed to serve", zap.Error(err))
@@ -101,6 +105,7 @@ func main() {
 	}()
 
 	logger.Info("listening", zap.String("host", lis.Addr().String()))
+	healthzServer.Ready()
 
 	sig := make(chan os.Signal, 1)
 	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
@@ -108,6 +113,7 @@ func main() {
 	terminationSignal := <-sig
 
 	logger.Info("shutting down...", zap.String("termination signal", terminationSignal.String()))
+	healthzServer.NotReady()
 
 	grpcServer.GracefulStop()
 	httpServer.Shutdown(context.Background())
