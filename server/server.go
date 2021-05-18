@@ -17,7 +17,6 @@ package server
 import (
 	"context"
 
-	"github.com/golang/protobuf/ptypes"
 	"github.com/rode/new-collector-template/proto/v1alpha1"
 	pb "github.com/rode/rode/proto/v1alpha1"
 	"github.com/rode/rode/protodeps/grafeas/proto/v1beta1/build_go_proto"
@@ -28,6 +27,7 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 const (
@@ -54,7 +54,7 @@ func (s *NewCollectorTemplateServer) CreateEventOccurrence(ctx context.Context, 
 
 	o := &grafeas_go_proto.Occurrence{
 		Resource: &grafeas_go_proto.Resource{
-			Uri: "github.com/rode/rode@bca0e1b89be42a61131b6de09fd2836e7b00c252",
+			Uri: "git://github.com/rode/rode@bca0e1b89be42a61131b6de09fd2836e7b00c252",
 		},
 		NoteName: newCollectorTemplateNote,
 		Kind:     common_go_proto.NoteKind_BUILD,
@@ -63,7 +63,7 @@ func (s *NewCollectorTemplateServer) CreateEventOccurrence(ctx context.Context, 
 				Provenance: &provenance_go_proto.BuildProvenance{
 					Id:         request.Name,
 					ProjectId:  rodeProjectId,
-					CreateTime: ptypes.TimestampNow(),
+					CreateTime: timestamppb.Now(),
 					SourceProvenance: &provenance_go_proto.Source{
 						Context: &source_go_proto.SourceContext{
 							Context: &source_go_proto.SourceContext_Git{
