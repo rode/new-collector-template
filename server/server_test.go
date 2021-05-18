@@ -18,7 +18,6 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/rode/new-collector-template/mocks"
@@ -33,21 +32,15 @@ import (
 var _ = Describe("Server", func() {
 	var (
 		ctx        context.Context
-		mockCtrl   *gomock.Controller
-		rodeClient *mocks.MockRodeClient
+		rodeClient *mocks.FakeRodeClient
 		server     *NewCollectorTemplateServer
 	)
 
 	BeforeEach(func() {
 		ctx = context.Background()
-		mockCtrl = gomock.NewController(GinkgoT())
-		rodeClient = mocks.NewMockRodeClient(mockCtrl)
+		rodeClient = &mocks.FakeRodeClient{}
 
 		server = NewNewCollectorTemplateServer(logger, rodeClient)
-	})
-
-	AfterEach(func() {
-		mockCtrl.Finish()
 	})
 
 	Describe("CreateEventOccurrence", func() {
@@ -70,7 +63,6 @@ var _ = Describe("Server", func() {
 		Describe("the occurrence is created successfully", func() {
 			var (
 				expectedOccurrenceId string
-				actualBatchRequest   *pb.BatchCreateOccurrencesRequest
 			)
 
 			BeforeEach(func() {
@@ -79,13 +71,9 @@ var _ = Describe("Server", func() {
 					Name: expectedOccurrenceId,
 				}
 
-				rodeClient.EXPECT().
-					BatchCreateOccurrences(ctx, gomock.Any()).
-					Do(func(_ context.Context, r *pb.BatchCreateOccurrencesRequest) {
-						actualBatchRequest = r
-					}).
-					Return(&pb.BatchCreateOccurrencesResponse{Occurrences: []*grafeas_go_proto.Occurrence{newOccurrence}}, nil).
-					Times(1)
+				rodeClient.BatchCreateOccurrencesReturns(&pb.BatchCreateOccurrencesResponse{
+					Occurrences: []*grafeas_go_proto.Occurrence{newOccurrence},
+				}, nil)
 			})
 
 			It("should not return an error", func() {
@@ -93,9 +81,13 @@ var _ = Describe("Server", func() {
 			})
 
 			It("should create a build occurrence", func() {
-				actualOccurrence := actualBatchRequest.Occurrences[0]
+				Expect(rodeClient.BatchCreateOccurrencesCallCount()).To(Equal(1))
+				_, actualRequest, _ := rodeClient.BatchCreateOccurrencesArgsForCall(0)
 
-				Expect(actualOccurrence.Resource.Uri).To(Equal("github.com/rode/rode@bca0e1b89be42a61131b6de09fd2836e7b00c252"))
+				Expect(actualRequest.Occurrences).To(HaveLen(1))
+				actualOccurrence := actualRequest.Occurrences[0]
+
+				Expect(actualOccurrence.Resource.Uri).To(Equal("git://github.com/rode/rode@bca0e1b89be42a61131b6de09fd2836e7b00c252"))
 				Expect(actualOccurrence.NoteName).To(Equal("projects/rode/notes/new_collector_template"))
 				Expect(actualOccurrence.Kind).To(Equal(common_go_proto.NoteKind_BUILD))
 				Expect(actualOccurrence.GetBuild().Provenance.Id).To(Equal(request.Name))
@@ -114,10 +106,7 @@ var _ = Describe("Server", func() {
 
 			BeforeEach(func() {
 				expectedError = fmt.Errorf(fake.Word())
-				rodeClient.EXPECT().
-					BatchCreateOccurrences(gomock.Any(), gomock.Any()).
-					Return(nil, expectedError).
-					Times(1)
+				rodeClient.BatchCreateOccurrencesReturns(nil, expectedError)
 			})
 
 			It("should return an error", func() {
