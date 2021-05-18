@@ -1,4 +1,4 @@
-.PHONY: test fmtcheck vet fmt license coverage mocks run generate
+.PHONY: test fmtcheck vet fmt license coverage mocks generate
 MAKEFLAGS += --silent
 GOFMT_FILES?=$$(find . -name '*.go' | grep -v proto)
 LICENSE_FILES=$$(find -E . -regex '.*\.(go|proto)')
@@ -29,6 +29,3 @@ mocks:
 
 test: fmtcheck vet
 	go test -v ./... -coverprofile=coverage.txt -covermode atomic
-
-run:
-	go run main.go --rode-host=localhost:50053 --rode-insecure --debug

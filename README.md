@@ -34,6 +34,5 @@ Boilerplate for creating new collectors.
     - `generate`: Generates client and server code from the protobuf definitions    
     - `license`: Runs `addlicense` to populate license headers on source code
     - `mocks`: Generates a mock for the Rode client    
-    - `run`: Run the collector locally    
     - `test`: Runs unit tests
     - `vet`: Runs `go vet`
