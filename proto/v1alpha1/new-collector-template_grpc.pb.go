@@ -11,6 +11,7 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
+// Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
 // NewCollectorTemplateClient is the client API for NewCollectorTemplate service.
@@ -60,7 +61,7 @@ type UnsafeNewCollectorTemplateServer interface {
 }
 
 func RegisterNewCollectorTemplateServer(s grpc.ServiceRegistrar, srv NewCollectorTemplateServer) {
-	s.RegisterService(&_NewCollectorTemplate_serviceDesc, srv)
+	s.RegisterService(&NewCollectorTemplate_ServiceDesc, srv)
 }
 
 func _NewCollectorTemplate_CreateEventOccurrence_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -81,7 +82,10 @@ func _NewCollectorTemplate_CreateEventOccurrence_Handler(srv interface{}, ctx co
 	return interceptor(ctx, in, info, handler)
 }
 
-var _NewCollectorTemplate_serviceDesc = grpc.ServiceDesc{
+// NewCollectorTemplate_ServiceDesc is the grpc.ServiceDesc for NewCollectorTemplate service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var NewCollectorTemplate_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "new_collector_template.v1alpha1.NewCollectorTemplate",
 	HandlerType: (*NewCollectorTemplateServer)(nil),
 	Methods: []grpc.MethodDesc{
