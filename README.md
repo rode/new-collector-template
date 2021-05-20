@@ -15,7 +15,7 @@ Boilerplate for creating new collectors.
 1. Run `make generate` to update the generated server code. 
 1. Update the `server` package to implement the new gRPC server interface.
 1. Update `main.go` to reference the new server and handler code
-1. Pick an unallocated ports and update the `config` package to replace the default for `--port`.
+1. Pick an unallocated port and update the `config` package to replace the default for `--port`.
     - The `config` tests will need to be updated as well
 
 ## What's Included
