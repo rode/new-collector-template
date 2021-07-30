@@ -17,6 +17,7 @@ package config
 import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/ginkgo/extensions/table"
+	"github.com/rode/rode/common"
 
 	. "github.com/onsi/gomega"
 )
@@ -41,25 +42,34 @@ var _ = Describe("Config", func() {
 			Expect(c).To(Equal(expected))
 		},
 			Entry("default config", []string{}, &Config{
-				Port:  1233,
-				Debug: false,
-				RodeConfig: &RodeConfig{
-					Host: "rode:50051",
+				Port: 1233,
+				ClientConfig: &common.ClientConfig{
+					Rode: &common.RodeClientConfig{
+						Host: "rode:50051",
+					},
+					OIDCAuth:  &common.OIDCAuthConfig{},
+					BasicAuth: &common.BasicAuthConfig{},
 				},
 			}),
 			Entry("Rode host flag", []string{"--rode-host=bar"}, &Config{
-				Port:  1233,
-				Debug: false,
-				RodeConfig: &RodeConfig{
-					Host: "bar",
+				Port: 1233,
+				ClientConfig: &common.ClientConfig{
+					Rode: &common.RodeClientConfig{
+						Host: "bar",
+					},
+					OIDCAuth:  &common.OIDCAuthConfig{},
+					BasicAuth: &common.BasicAuthConfig{},
 				},
 			}),
-			Entry("Rode insecure flag", []string{"--rode-insecure=true"}, &Config{
-				Port:  1233,
-				Debug: false,
-				RodeConfig: &RodeConfig{
-					Host:     "rode:50051",
-					Insecure: true,
+			Entry("Rode insecure flag", []string{"--rode-insecure-disable-transport-security"}, &Config{
+				Port: 1233,
+				ClientConfig: &common.ClientConfig{
+					Rode: &common.RodeClientConfig{
+						Host:                     "rode:50051",
+						DisableTransportSecurity: true,
+					},
+					OIDCAuth:  &common.OIDCAuthConfig{},
+					BasicAuth: &common.BasicAuthConfig{},
 				},
 			}),
 		)
