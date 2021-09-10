@@ -77,7 +77,7 @@ func RegisterNewCollectorTemplateHandlerServer(ctx context.Context, mux *runtime
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/new_collector_template.v1alpha1.NewCollectorTemplate/CreateEventOccurrence")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/new_collector_template.v1alpha1.NewCollectorTemplate/CreateEventOccurrence", runtime.WithHTTPPathPattern("/v1alpha1/events"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -139,7 +139,7 @@ func RegisterNewCollectorTemplateHandlerClient(ctx context.Context, mux *runtime
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/new_collector_template.v1alpha1.NewCollectorTemplate/CreateEventOccurrence")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/new_collector_template.v1alpha1.NewCollectorTemplate/CreateEventOccurrence", runtime.WithHTTPPathPattern("/v1alpha1/events"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
