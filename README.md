@@ -4,11 +4,9 @@ Boilerplate for creating new collectors.
 
 ## Usage
 
-This template can be automatically reconfigured, given the name of the new collector:
-
 1. Hit the "Use this template" button to create a new repository from the template.
-1. Run `./template.sh collector-foo-bar`
-1. Make any needed modifications under the `proto` directory for the collector's API
+1. Run `./template.sh collector-foo-bar`.
+1. Make any needed modifications under the `proto` directory for the collector's API.
 1. Pick an unallocated port and update the `config` package to replace the default for `--port`.
     - The `config` tests will need to be updated as well
 
