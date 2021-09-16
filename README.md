@@ -5,16 +5,8 @@ Boilerplate for creating new collectors.
 ## Usage
 
 1. Hit the "Use this template" button to create a new repository from the template.
-1. Update the go mod file with the new root module: `go mod edit -module "github.com/rode/$MY_COLLECTOR"`.
-1. Find and replace any usages of the following with your collector name:
-    1. new-collector-template
-    1. newCollectorTemplate 
-    1. new_collector_template
-1. Delete or modify the proto files under `proto/v1alpha1`.
-   - Remove any generated code under `proto`
-1. Run `make generate` to update the generated server code. 
-1. Update the `server` package to implement the new gRPC server interface.
-1. Update `main.go` to reference the new server and handler code
+1. Run `./template.sh collector-foo-bar`.
+1. Make any needed modifications under the `proto` directory for the collector's API.
 1. Pick an unallocated port and update the `config` package to replace the default for `--port`.
     - The `config` tests will need to be updated as well
 
