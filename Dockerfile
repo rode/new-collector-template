@@ -28,6 +28,7 @@ RUN --mount=type=cache,target=/root/.cache/go-build CGO_ENABLED=0 GOOS=linux GOA
 
 # Refer to https://github.com/GoogleContainerTools/distroless for more details
 FROM gcr.io/distroless/static:nonroot as runner
+LABEL org.opencontainers.image.source=https://github.com/rode/new-collector-template
 WORKDIR /
 COPY --from=builder /workspace/collector .
 COPY --from=builder /bin/grpc_health_probe .
