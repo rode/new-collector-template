@@ -89,7 +89,7 @@ rm "$projectName"
 info "Updating README"
 echo "# $projectName" > README.md
 
-info "Build Docker image"
+info "Building Docker image"
 docker build -t "$projectName" .
 
 info "Done, deleting this script"
